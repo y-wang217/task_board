@@ -1,0 +1,79 @@
+extends layout
+
+block layout-content
+// Navigation
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
+  .container
+    a.navbar-brand(href='#') Deloitte
+    button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarResponsive.collapse.navbar-collapse
+      ul.navbar-nav.ml-auto
+        li.nav-item.active
+          a.nav-link(href='#')
+            | Home
+            span.sr-only (current)
+        li.nav-item
+          a.nav-link(href='#') Your Tasks
+        li.nav-item
+          a.nav-link(href='#') Completed Tasks
+        li.nav-item
+          button.btn.btn-outline-success(type='button') Create Task
+.divider
+  // Tasks List
+  .container
+    .row
+      .company-header-avatar(style='background-image: url(https://images.pexels.com/photos/1181695/pexels-photo-1181695.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)')
+      .card-col
+        input.form-control.name-field(type='text' placeholder='Name')
+      .card-col
+        input.form-control.hours-field(type='text' placeholder='Hours Expected')
+      .card-col
+        input.form-control.duedate-field(type='text' placeholder='Due Date')
+      .card-col
+        input.form-control.description-field(type='text' placeholder='Task Description')
+      .card-col
+        input.form-control(type='button' value='Help Me!')
+  // Tasks List
+  .container
+    .row
+      .company-header-avatar(style='background-image: url(https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?cs=srgb&dl=man-wearing-white-dress-shirt-and-black-blazer-2182970.jpg&fm=jpg)')
+      .card-col
+        input.form-control.name-field(type='text' placeholder='Name')
+      .card-col
+        input.form-control.hours-field(type='text' placeholder='Hours Expected')
+      .card-col
+        input.form-control.duedate-field(type='text' placeholder='Due Date')
+      .card-col
+        input.form-control.description-field(type='text' placeholder='Task Description')
+      .card-col
+        input.form-control(type='button' value='Help Me!')
+  // Tasks List
+  .container
+    .row
+      .company-header-avatar(style='background-image: url(https://images.pexels.com/photos/1181293/pexels-photo-1181293.jpeg?cs=srgb&dl=adult-attractive-beautiful-brunette-1181293.jpg&fm=jpg)')
+      .card-col
+        input.form-control.name-field(type='text' placeholder='Name')
+      .card-col
+        input.form-control.hours-field(type='text' placeholder='Hours Expected')
+      .card-col
+        input.form-control.duedate-field(type='text' placeholder='Due Date')
+      .card-col
+        input.form-control.description-field(type='text' placeholder='Task Description')
+      .card-col
+        input.form-control(type='button' value='Help Me!')
+  // Tasks List
+  .container.complete
+    .row
+      .company-header-avatar(style='background-image: url(https://images.pexels.com/photos/1181695/pexels-photo-1181695.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)')
+      .card-col
+        input.form-control.name-field(type='text' placeholder='Name')
+      .card-col
+        input.form-control.hours-field(type='text' placeholder='Hours Expected')
+      .card-col
+        input.form-control.duedate-field(type='text' placeholder='Due Date')
+      .card-col
+        input.form-control.description-field(type='text' placeholder='Task Description')
+  // Bootstrap core JavaScript
+  script(src='vendor/jquery/jquery.slim.min.js')
+  script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')

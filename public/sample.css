@@ -1,0 +1,214 @@
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hideform {
+    display: none;
+}
+
+/* MODALS */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* CARD Organization/Spacing */
+.form-row{
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.card-col{
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.card-col #description{
+}
+
+.company-header-avatar {
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 60px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 60px;
+  -moz-background-clip: padding;
+  border-radius: 60px;
+  background-clip: padding-box;
+  margin: 5px 0 0 5px;
+  float: left;
+  background-size: cover;
+
+  border: 1px solid!important;
+  border-color: #DDEFE8!important;
+}
+
+.divider { 
+  padding-top: 30px; 
+}
+
+.container{
+  margin-bottom: 2px;
+  border-radius: .25rem!important;
+  border: 1px solid transparent;
+}
+
+.container.task_container{
+  border: 1px solid #dee2e6!important;
+  border-color: #B0BEC5!important;
+  
+}
+
+.container.card:hover{
+  border: 1px solid #000000!important;
+  border-color: #000000!important;
+}
+
+.container.complete{
+  background: #cccccc;
+}
+
+.container.curr-user{
+  background: rgba(134, 188, 66, 0.2);
+}
+
+.container.active{
+  background: rgba(134, 188, 66, 0.6);
+}
+
+.container.header{
+  border-radius: .25rem!important;
+  background: #ffffff;
+  margin-bottom: 0px!important;
+  padding-bottom: :0px!important;
+}
+/*.container.header{
+  background: rgba(52,58,64,0.6);
+}*/
+/*343a40*/
+
+/* Form inputs*/
+.form-control{
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.form-control.name-field{
+  width: 150px;
+}
+
+.form-control.hours-field{
+  width: 85px;
+}
+
+.form-control.duedate-field{
+  width: 150px;
+}
+
+.form-control.description-field{
+  width: 440px;
+}
+
+/* Labels */
+.label {
+  font-size: 16px;
+  color: #404040;
+  display: inline-block;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #ffffff;
+  padding: 8px 8px;
+  border-radius: 2px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  padding-top: 8px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+}
+.label.label-icon{
+  margin-left: 70px;
+  width: 180px;
+  max-width: 180px;
+}
+.label.label-name{
+  width: 180px;
+  max-width: 180px;
+}
+.label.label-hours{
+  width: 85px;
+  max-width: 85px;
+}
+.label.label-duedate{
+  width: 150px;
+  max-width: 150px;
+}
+.label.label-description{
+  width: 440px;
+  max-width: 440px;
+}
+
+.label-text{
+  color: #53565A;
+}
+
+
+.label.label-outlined {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.label.label-outlined.label-default {
+  border-color: #B0BEC5;
+}
+
+.exit-create{
+    margin-left: 10px;
+}

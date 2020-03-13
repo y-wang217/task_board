@@ -1,0 +1,23 @@
+{
+  "name": "application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./index.js",
+    "ui": "browser-sync start --proxy=localhost:8000 --files='**/*.css, **/*.pug, **/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.4.4",
+    "pug": "^2.0.4"
+  }
+}
