@@ -33,7 +33,6 @@ window.onload = function() {
 		confirmTaskFinal();
 	}
 
-
 	/* MODAL close a modal if user clicks outside of it*/
 	window.onclick = function(event) {
 		if (event.target == create_modal || event.target == confirm_modal) {
@@ -41,6 +40,32 @@ window.onload = function() {
 			create_modal.style.display = "none";
 		}
 	}
+	/*
+	TODO
+	Create a modal for 'are you sure you want to change this post'
+	Create a modal for 'are you sure you want to delete this post'
+	*/
+
+	$(document.body).on('mouseover', '.curr-user .row', function(){
+		if(!$(this).find('.close').length){
+			var aria_btn = document.createElement('button');
+			aria_btn.type='button';
+			aria_btn.className='close owned';
+			var aria = document.createElement('span');
+			aria.setAttribute('aria-hidden',"true");
+
+			var aria_text = document.createTextNode('x');
+			aria.appendChild(aria_text);
+			aria_btn.appendChild(aria);
+
+			$(this).append(aria_btn);
+		}
+	});
+
+	
+	$(document.body).on('mouseleave', '.curr-user .row', function(){
+		$(this).find('.close').remove();
+	});
 
 	/* UX for changing a date from a visible date to a dropdown calendar */
 	$(document.body).on('focus', '.duedate-field', function() {
@@ -240,7 +265,6 @@ function photoLink(buffer){
     return imageUrl;
 }
 
-
 /* MIDDLEWARE handles creating each card from info returned by the db */
 function create_card(task){
 	console.log(task);
@@ -389,6 +413,5 @@ function create_card(task){
 		}
 	}
 
-	////
 	document.getElementById('list_begin_point').appendChild(container);
 }
