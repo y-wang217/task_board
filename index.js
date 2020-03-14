@@ -143,6 +143,15 @@ app.post("/make_inactive", (req, res) => {
 });
 app.post("/update_task", (req, res) => {
 	console.log(req.body);
+
+	var update_task_query = 'update tasks set task_duration = '+req.body.hours+', task_duedate = "'+req.body.duedate+'", task_description ="'+req.body.description+'" where idtasks = '+req.body.id+';'
+
+	//Update the info for the specified task
+	connection.query(update_task_query, (err, results, fields) => {
+		if(err) throw err;
+		console.log(results);
+		res.send(results);
+	});
 });
 
 /**

@@ -127,24 +127,47 @@ function update_task(update_element, task_id){
 	var duedate_changed = update_element.parent().parent().find(".duedate-field").val();
 	var description_changed = update_element.parent().parent().find(".description-field").val();
 	
+	/* the data object should contain the existing info as a shortcut so unchanged data is not affected */
 	var update_task_data = {};
 	if(hours_changed != "")
-		update_task_data.hours = hours_changed;
+		update_task_data.hours = formatHours(hours_changed);
 	else
-		update_task_data.hours = update_element.parent().parent().find(".hours-field").attr('placeholder');
+		update_task_data.hours = formatHours(update_element.parent().parent().find(".hours-field").attr('placeholder'));
 	if(duedate_changed != "")
-		update_task_data.duedate = duedate_changed;
+		update_task_data.duedate = formatDate(duedate_changed);
 	else
-		update_task_data.hours = update_element.parent().parent().find(".duedate-field").attr('placeholder');
+		update_task_data.duedate = formatDate(update_element.parent().parent().find(".duedate-field").attr('placeholder'));
 	if(description_changed != "")
 		update_task_data.description = description_changed
 	else
-		update_task_data.hours = update_element.parent().parent().find(".description-field").attr('placeholder');
+		update_task_data.description = update_element.parent().parent().find(".description-field").attr('placeholder');
 	
-	console.log(JSON.stringify(update_task_data) + " " + task_id);
+	update_task_data.id = task_id;
+	console.log(JSON.stringify(update_task_data));
 	$.post("/update_task", update_task_data, function(data){
 		console.log(data);
 	})
+
+}
+
+/* SUBFUNCTION helper to change date from verbal Month Day, Year to YYYY-MM-DD */
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (parseInt(d.getMonth()) + 1),
+        day = '' + (parseInt(d.getDate()) + 1),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+/* SUBFUNCTION helper to change hours from X days to X */
+function formatHours(hours){
+	return parseInt(hours);
 }
 
 /* AJAX POST to insert task into db */
@@ -220,7 +243,7 @@ function photoLink(buffer){
 
 /* MIDDLEWARE handles creating each card from info returned by the db */
 function create_card(task){
-	//console.log(task);
+	console.log(task);
 	var is_belong_curr_user = false;
 	//divide between editable by user and not
 	if(task['fullname'] == CURR_USER){
@@ -267,8 +290,8 @@ function create_card(task){
 	// parse MySQL datetime to js datetime
 	var t = task['task_duedate'].substr(0,10).split(/-/);
 	// Apply each element to the Date function
-	var due_date = new Date(Date.UTC(t[0], t[1], t[2]));
-	const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+	var due_date = new Date(t[0], parseInt(t[1])-1, t[2]);
+	const options = {year: 'numeric', month: 'long', day: 'numeric' };
 	due_date = due_date.toLocaleDateString(undefined, options);
 
 	// add task_id to the row and make it invisible for every task
