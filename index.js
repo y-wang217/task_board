@@ -113,6 +113,14 @@ app.get("/tasks", (req, res) => {
 		res.send(rows);
 	})
 });
+app.get("/deloite_logo", (req, res) => {
+	connection.query('SELECT data from resources', (err, rows) => {
+		if(err) throw err;
+
+		console.log(rows);
+		res.send(rows);
+	})
+});
 app.post("/tasks", (req, res) => {
 	console.log(req.body.task_duration);
 	console.log(req.body.task_duedate);

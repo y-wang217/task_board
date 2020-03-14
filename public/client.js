@@ -2,8 +2,16 @@ var CURR_USER = "";
 var CURR_USER_PHOTO = "";
 var CURR_USER_EMAIL = "";
 var TASK_ID_FOR_CONFIRM = null;
+var TASK_BOARD_LOGO = "";
 
 window.onload = function() {
+	$.get( "/deloite_logo", function( data ) {
+		TASK_BOARD_LOGO = data[0]['data']['data'];
+		var logoUrl = photoLink(TASK_BOARD_LOGO);
+		$('.deloite_logo').attr("src", logoUrl);
+		$('.deloite_logo').toggle();
+	});
+
 	/* Grab references for the Modal functionality*/
 	const button = document.getElementById('create_task');
 	button.addEventListener('click', function(e) {
@@ -38,6 +46,7 @@ window.onload = function() {
 		if (event.target == create_modal || event.target == confirm_modal) {
 			confirm_modal.style.display = "none";
 			create_modal.style.display = "none";
+			
 		}
 	}
 	/*
@@ -46,11 +55,14 @@ window.onload = function() {
 	Create a modal for 'are you sure you want to delete this post'
 	*/
 
+
+	/* UX when mouse is over a task owned by the user, create an X */
 	$(document.body).on('mouseover', '.curr-user .row', function(){
 		if(!$(this).find('.close').length){
 			var aria_btn = document.createElement('button');
 			aria_btn.type='button';
 			aria_btn.className='close owned';
+			aria_btn.id = 'delete_task'
 			var aria = document.createElement('span');
 			aria.setAttribute('aria-hidden',"true");
 
@@ -61,8 +73,7 @@ window.onload = function() {
 			$(this).append(aria_btn);
 		}
 	});
-
-	
+	/* On mouse leaving the owned task, remove the X */
 	$(document.body).on('mouseleave', '.curr-user .row', function(){
 		$(this).find('.close').remove();
 	});
@@ -90,9 +101,15 @@ window.onload = function() {
 
 	/* Event listener to catch 'Edit Task' action */
 	$(document.body).on('click', '#edit_task', function() {
-		update_task($(this), $(this).parent().parent().find("#task_id").val());
+		editTaskPopup($(this));
+		// update_task($(this), $(this).parent().parent().find("#task_id").val());
 	});
 
+	/* Event listener to catch 'Delete Task' action */
+	$(document.body).on('click', '#delete_task', function() {
+		deleteTaskPopup($(this));
+		// update_task($(this), $(this).parent().parent().find("#task_id").val());
+	});
 
 	/******************************AJAX CALLS******************************/
 	$.get( "/userinfo", function( data ) {
@@ -209,6 +226,17 @@ function confirmTaskPopup(task_data){
 	TASK_ID_FOR_CONFIRM = task_data;
 }
 
+/* MODAL shows the modal for when user wants to sign up for a task */
+function editTaskPopup(task_data){
+	$('.edit_modal').show();
+	TASK_ID_FOR_CONFIRM = task_data;
+}
+/* MODAL shows the modal for when user wants to sign up for a task */
+function deleteTaskPopup(task_data){
+	$('.delete_modal').show();
+	TASK_ID_FOR_CONFIRM = task_data;
+}
+
 /* SUBFUNCTION called when user confirms they want to sign up for a task */
 function confirmTaskFinal(){
 	/* CSS change to a grey-ed out task*/
@@ -267,7 +295,7 @@ function photoLink(buffer){
 
 /* MIDDLEWARE handles creating each card from info returned by the db */
 function create_card(task){
-	console.log(task);
+	//console.log(task);
 	var is_belong_curr_user = false;
 	//divide between editable by user and not
 	if(task['fullname'] == CURR_USER){
@@ -292,11 +320,8 @@ function create_card(task){
 	var avatar = document.createElement('div');
 	avatar.className = 'company-header-avatar';
 
-	var arrayBufferView = new Uint8Array( task['photo']['data'] );
-    var blob = new Blob( [arrayBufferView], { type: "image/jpeg" } );
-    var urlCreator = window.URL || window.webkitURL;
-    var imageUrl = urlCreator.createObjectURL( blob );
-    avatar.style = "background-image: url("+imageUrl+")";
+    avatar.style = "background-image: url("+photoLink(task['photo']['data'])+")";
+
 
 	row.appendChild(avatar);
 

@@ -1,3 +1,11 @@
+.deloite_logo{
+  display: none;
+  width: 146px;
+  height: 77px;
+}
+.navbar{
+  height : 81px;
+}
 .center {
     margin: auto;
     width: 60%;

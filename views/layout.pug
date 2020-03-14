@@ -16,7 +16,7 @@ head
 // Navigation
 nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
   .container
-    img(src='task_board.png' alt='Task_Board' width='67.5' height='30') 
+    img.deloite_logo
     button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #navbarResponsive.collapse.navbar-collapse
@@ -49,6 +49,26 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
       br
       br
       input#confirm_task_btn(type='submit' value='Submit')
+
+#edit_modal.modal.edit_modal
+  // Modal content
+  .modal-content
+    button#confirm_modal_close(style='float: right;') X
+    form(action='#')
+      | Are you sure you want to edit this task?:
+      br
+      br
+      input#edit_task_btn(type='submit' value='Submit')
+
+#delete_modal.modal.delete_modal
+  // Modal content
+  .modal-content
+    button#confirm_modal_close(style='float: right;') X
+    form(action='#')
+      | Are you sure you want to delete this task?:
+      br
+      br
+      input#delete_task_btn(type='submit' value='Submit')
 
 .divider
 
