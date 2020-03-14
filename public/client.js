@@ -3,6 +3,7 @@ var CURR_USER_PHOTO = "";
 var CURR_USER_EMAIL = "";
 var TASK_ID_FOR_CONFIRM = null;
 var TASK_BOARD_LOGO = "";
+var TASK_ELEMENT = "";
 
 window.onload = function() {
 	$.get( "/deloite_logo", function( data ) {
@@ -12,48 +13,64 @@ window.onload = function() {
 		$('.deloite_logo').toggle();
 	});
 
-	/* Grab references for the Modal functionality*/
-	const button = document.getElementById('create_task');
-	button.addEventListener('click', function(e) {
+	/* EVENT create a new task bound to 'Create Task' button */
+	$('#create_task').click(function(){
 		add_task();
 	});
 
-	/* MODAL for creating a new task */
-	var create_modal = document.getElementById("create_modal");
-	var create_x_out = document.getElementById('create_modal_close');
-	create_x_out.onclick = function() {
-		create_modal.style.display = "none";
-	}
-	var create_task_button = document.getElementById('create_task_btn');
-	create_task_button.onclick = function() {
-		create_modal.style.display = "none";
-	}
+	/* MODAL handle closing of the modal on exit */
+	$('#create_modal_close').click(function(){
+		$('#create_modal').toggle();
+	})
+	/* Create task when confirmed */
+	$('#create_task_btn').click(function(){
+		$('#create_modal').toggle();
+		createTaskPopup(TASK_ELEMENT);
+	})
 
-	/* MODAL for confirming that you want to take on a task*/
-	var confirm_modal = document.getElementById("confirm_modal");
-	var confirm_x_out = document.getElementById('confirm_modal_close');
-	confirm_x_out.onclick = function() {
-		confirm_modal.style.display = "none";
-	}
-	var submit_task_button = document.getElementById('confirm_task_btn');
-	submit_task_button.onclick = function() {
-		confirm_modal.style.display = "none";
+	/* MODAL handle closing of modal on exit */
+	$('#confirm_modal_close').click(function(){
+		$('#confirm_modal').toggle();
+	})
+	/* Confirm that task is accepted when confirmed */
+	$('#confirm_task_btn').click(function(){
+		$('#confirm_modal').toggle();
 		confirmTaskFinal();
-	}
+	})
+
+	/* MODAL handle closing of modal on exit */
+	$('#edit_modal_close').click(function(){
+		$('#edit_modal').toggle();
+	})
+	/* Confirm that task is accepted when confirmed */
+	$('#edit_task_btn').click(function(){
+		$('#edit_modal').toggle();
+		editTaskPopup(TASK_ELEMENT);
+	})
+
+
+	/* MODAL handle closing of modal on exit */
+	$('#delete_modal_close').click(function(){
+		$('#delete_modal').toggle();
+	})
+	/* Confirm that task is accepted when confirmed */
+	$('#delete_task_btn').click(function(){
+		$('#delete_modal').toggle();
+		console.log(TASK_ELEMENT);
+		deleteTaskPopup(TASK_ELEMENT);
+	})
+
 
 	/* MODAL close a modal if user clicks outside of it*/
-	window.onclick = function(event) {
-		if (event.target == create_modal || event.target == confirm_modal) {
-			confirm_modal.style.display = "none";
-			create_modal.style.display = "none";
-			
+	$(document.body).on('click', '.modal', function(){
+		var id = $(this).attr('id');
+		if(id == "create_modal" || id == "confirm_modal" || id == "edit_modal" || id == "delete_modal"){
+			$('#create_modal').hide();
+			$('#confirm_modal').hide();
+			$('#edit_modal').hide();
+			$('#delete_modal').hide();
 		}
-	}
-	/*
-	TODO
-	Create a modal for 'are you sure you want to change this post'
-	Create a modal for 'are you sure you want to delete this post'
-	*/
+	});
 
 
 	/* UX when mouse is over a task owned by the user, create an X */
@@ -89,7 +106,10 @@ window.onload = function() {
 	/* UX show the create a task confimration when click 'Create Task' on navbar */
 	$(document.body).on('click', '.create_task', function() {
 		$('.create_modal').show();
+		TASK_ELEMENT = $(this);
 	});
+
+	/* UX remove the 'create a task' card when exited */
 	$(document.body).on('click', '.exit-create', function() {
 		$(this).parent().parent().parent().remove();
 	});
@@ -99,15 +119,17 @@ window.onload = function() {
 		confirmTaskPopup($(this));
 	});
 
-	/* Event listener to catch 'Edit Task' action */
+	/* UX show modal when editing task */
 	$(document.body).on('click', '#edit_task', function() {
-		editTaskPopup($(this));
+		$('.edit_modal').show();
+		TASK_ELEMENT = $(this);
 		// update_task($(this), $(this).parent().parent().find("#task_id").val());
 	});
 
-	/* Event listener to catch 'Delete Task' action */
+	/* UX show modal when deleting task */
 	$(document.body).on('click', '#delete_task', function() {
-		deleteTaskPopup($(this));
+		TASK_ELEMENT = $(this).parent();
+		$('.delete_modal').show();
 		// update_task($(this), $(this).parent().parent().find("#task_id").val());
 	});
 
@@ -135,26 +157,27 @@ function add_task(){
 /* MODAL action for handling the elements changing when a new task is added to the board */
 function createTaskPopup(task_data){
 	/* Change the css */
-	$(this).parent().parent().parent().addClass("curr-user card")
+	task_data.parent().parent().parent().addClass("curr-user card")
 	/* Create a new button and add it to the card */
 	var helpme_input = document.createElement('input');
 	helpme_input.className = 'form-control sign_up_task';
 	helpme_input.type = 'button';
 	helpme_input.value = 'Help Me!';
-	$(this).parent().append(helpme_input);
+	task_data.parent().append(helpme_input);
 	
 	/* Get rid of the 'cancel' aria-label */
-	$(this).parent().parent().find(".close").remove();
+	task_data.parent().parent().find(".close").remove();
 
 	/* get rid of the old 'confirm' button */
-	$(this).hide();
+	task_data.hide();
 
 	/* AJAX */
 	/* prep for the ajax by sending all database into one object */
 	var task_info_for_db = {};
-	task_info_for_db["task_duration"] = $(this).parent().parent().find(".hours-field").val()
-	task_info_for_db["task_duedate"] = $(this).parent().parent().find(".duedate-field").val()
-	task_info_for_db["task_description"] = $(this).parent().parent().find(".description-field").val()
+	console.log()
+	task_info_for_db["task_duration"] = task_data.parent().parent().find(".hours-field").val()
+	task_info_for_db["task_duedate"] = task_data.parent().parent().find(".duedate-field").val()
+	task_info_for_db["task_description"] = task_data.parent().parent().find(".description-field").val()
 	task_info_for_db["user_fullname"] = CURR_USER;
 	task_info_for_db["is_active"] = 1;
 	/* POST */
@@ -228,13 +251,21 @@ function confirmTaskPopup(task_data){
 
 /* MODAL shows the modal for when user wants to sign up for a task */
 function editTaskPopup(task_data){
-	$('.edit_modal').show();
-	TASK_ID_FOR_CONFIRM = task_data;
+	TASK_ID_FOR_CONFIRM = task_data.parent().parent().find('#task_id').val();
+	update_task(task_data, TASK_ID_FOR_CONFIRM);
 }
 /* MODAL shows the modal for when user wants to sign up for a task */
 function deleteTaskPopup(task_data){
-	$('.delete_modal').show();
-	TASK_ID_FOR_CONFIRM = task_data;
+	TASK_ID_FOR_CONFIRM = task_data.parent().find('#task_id').val();
+	delete_task(TASK_ID_FOR_CONFIRM);
+}
+
+function delete_task(task_id){
+	var delete_data = {id:task_id};
+
+	$.post("/delete_task", delete_data, function ( data ){
+		console.log(data);
+	})
 }
 
 /* SUBFUNCTION called when user confirms they want to sign up for a task */

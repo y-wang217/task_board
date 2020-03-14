@@ -161,6 +161,17 @@ app.post("/update_task", (req, res) => {
 		res.send(results);
 	});
 });
+app.post("/delete_task", (req, res) => {
+	console.log(req.body);
+	var update_task_query = 'delete from tasks where idtasks = '+req.body.id+';'
+
+	//delete the task entry for the specified task id
+	connection.query(update_task_query, (err, results, fields) => {
+		if(err) throw err;
+		console.log(results);
+		res.send(results);
+	});
+});
 
 /**
  * Server Activation
